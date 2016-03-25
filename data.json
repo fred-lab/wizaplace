@@ -1,0 +1,60 @@
+{
+    "students": {
+        "1": {
+            "name": "Alice"
+        },
+        "2": {
+            "name": "Bob"
+        },
+        "3": {
+            "name": "Claire"
+        }
+    },
+    "exam": [
+        {
+            "student": 1,
+            "date": "2016-01-12",
+            "grade": 13
+        },
+        {
+            "student": 2,
+            "date": "2016-01-12",
+            "grade": 8
+        },
+        {
+            "student": "3",
+            "date": "2016-01-12",
+            "grade": 16
+        },
+        {
+            "student": 1,
+            "date": "2016-02-23",
+            "grade": 9
+        },
+        {
+            "student": 2,
+            "date": "2016-02-23",
+            "grade": 0
+        },
+        {
+            "student": 3,
+            "date": "2016-02-23",
+            "grade": null
+        },
+        {
+            "student": 1,
+            "date": "2016-03-05",
+            "grade": 18
+        },
+        {
+            "student": 2,
+            "date": "2016-03-05",
+            "grade": 13
+        },
+        {
+            "student": 3,
+            "date": "2016-03-05",
+            "grade": 7
+        }
+    ]
+}
