@@ -5,14 +5,34 @@ namespace Wizacha\DevTest;
 class StudentManager
 {
     /**
+     * Decode JSON Data to an array
+     *
+     * @return array
+     */
+    public function getJsonData():array
+    {
+        return json_decode(file_get_contents(__DIR__ . '/../data.json'), true);
+    }
+
+    /**
      * @param int $studentId
      * @return string
      */
-    public function getStudentName($studentId)
+    public function getStudentName(int $studentId):string
     {
-        $json = file_get_contents(__DIR__ . '/../data.json');
-        $data = json_decode($json, true);
+        $data = $this->getJsonData();
         return $data['students'][$studentId]['name'];
+    }
+
+    /**
+     * Get Student Id
+     * @param string $studentName
+     * @return int
+     */
+    public function getStudentId(string $studentName):int
+    {
+        $data = $this->getJsonData();
+        return array_search($studentName, array_column($data['students'], 'name')) + 1;
     }
 
     /**
@@ -22,12 +42,11 @@ class StudentManager
      * @param string $examDate
      * @return bool
      */
-    public function studentAttendedExam($studentId, $examDate)
+    public function studentAttendedExam(int $studentId, string $examDate):bool
     {
-        $json = file_get_contents(__DIR__ . '/../data.json');
-        $data = json_decode($json, true);
+        $data = $this->getJsonData();
         foreach ($data['exam'] as $exam) {
-            if ($exam['student'] === $studentId && $exam['date'] == $examDate && $exam['grade'] != null) {
+            if (intval($exam['student']) === $studentId && strtotime($exam['date']) == strtotime($examDate) && isset($exam['grade'])) {
                 return true;
             }
         }
@@ -41,9 +60,20 @@ class StudentManager
      * @param string $untilDate Date.
      * @return int
      */
-    public function getStudentAverageGrade($studentName, $untilDate)
+    public function getStudentAverageGrade(string $studentName, string $untilDate):int
     {
-        // TODO
-        return 10;
+        $studentId = $this->getStudentId($studentName);
+        $data = $this->getJsonData();
+        $grade = [];
+
+        foreach ($data['exam'] as $exam) {
+            if (intval($exam['student']) === $studentId && strtotime($exam['date']) <= strtotime($untilDate) && isset($exam['grade'])) {
+                $grade[] = $exam['grade'];
+            }
+        }
+
+        $average = array_sum($grade) / count($grade);
+
+        return $average;
     }
 }

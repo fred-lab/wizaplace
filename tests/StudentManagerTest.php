@@ -15,6 +15,16 @@ class StudentManagerTest extends \PHPUnit_Framework_TestCase
         $name = $studentGrades->getStudentName($studentId);
         $this->assertEquals($expectedName, $name);
     }
+    
+    /**
+     * @dataProvider provideStudentNames
+     */
+    public function testStudentId($studentName, $expectedName)
+    {
+        $studentGrades = new StudentManager();
+        $id = $studentGrades->getStudentName($studentName);
+        $this->assertEquals($expectedName, $id);
+    }
 
     public function provideStudentNames()
     {
